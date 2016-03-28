@@ -1,17 +1,27 @@
+
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
+    <meta name="description" content="An Event Attendance Log">
+    
+    
 
     <title>Event Guest Attendance</title>
 
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel='stylesheet' type='text/css' href='pure-release-0.6.0/pure-min.css'>
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <link rel="stylesheet" href="pure-release-0.6.0/grids-responsive-min.css">
-
     <link rel="stylesheet" href="css/layouts/blog.css">
     
 </head>
@@ -20,12 +30,12 @@
         <div class="sidebar pure-u-1 pure-u-md-1-4">
             <div class="header">
                 <h2 class="brand-title">Event Guest Attendance</h2>            
-                <form class = "pure-form">
-                    <input  class="pure-input-1" type='text' id='nameInput' placeholder='Name'>
+                
+                    <input  class="pure-input-1" type='text' id='nameInput' placeholder='Name (Required)'>
                     <input  class="pure-input-1" type='text' id='organizationInput' placeholder='Organization'>
-                    <input  class="pure-input-1" type='tel' id='contactNumInput' placeholder='Contact Number'>         
-                    <button type="submit" class="pure-button pure-input-1 pure-button-primary" id="add_button" >Add</button>
-                </form>
+                    <input  class="pure-input-1" type='tel' id='contactNumInput' placeholder='Contact Number'>        
+                    <button type="submit" class="pure-button pure-button-primary" id="add_button" >Add</button>
+             
             </div>
         </div>
        
@@ -33,10 +43,10 @@
          
         </div>
 
-        <div class="content pure-u-1 pure-u-md-3-4" >
+        <div class="content pure-u-1 pure-u-md-1-4" >
             <div>
                 <div class="posts" >
-                    <table class = "guests-list">
+                    <table class = "bordered guests-list">
                         <thead>
                             <tr>
                                 <td>Name</td>
@@ -55,12 +65,22 @@
     </div>
     
     <script>
-    var myDataRef = new Firebase('https://flickering-inferno-5160.firebaseio.com/');
+    var myDataRef = new Firebase('https://guestlist-magpusao.firebaseio.com/');
     
     function addToList(){
-       var name = $('#nameInput').val();
+          var name = $('#nameInput').val();
           var organization = $('#organizationInput').val();
           var contactNum = $('#contactNumInput').val();
+          if(name == '' || name  == null){
+            alert("Required Field Empty!");
+            return;
+          }
+          if(organization == '' || organization == null){
+            organization = "N/A";
+          }
+          if(contactNum == '' || contactNum == null){
+            contactNum = "N/A";
+          }
           myDataRef.push({name: name, organization: organization, contactNum: contactNum});
           $('#nameInput').val('');
           $('#organizationInput').val('');
